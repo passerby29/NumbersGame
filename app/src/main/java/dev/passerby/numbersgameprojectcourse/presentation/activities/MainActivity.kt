@@ -1,4 +1,4 @@
-package dev.passerby.numbersgameprojectcourse.presentation
+package dev.passerby.numbersgameprojectcourse.presentation.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
