@@ -1,7 +1,7 @@
 package dev.passerby.numbersgameprojectcourse.presentation.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import dev.passerby.numbersgameprojectcourse.R
 
 class MainActivity : AppCompatActivity() {
