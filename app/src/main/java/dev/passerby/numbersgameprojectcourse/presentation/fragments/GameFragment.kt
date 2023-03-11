@@ -14,6 +14,7 @@ import dev.passerby.numbersgameprojectcourse.R
 import dev.passerby.numbersgameprojectcourse.databinding.FragmentGameBinding
 import dev.passerby.numbersgameprojectcourse.domain.entity.GameResult
 import dev.passerby.numbersgameprojectcourse.domain.entity.Level
+import dev.passerby.numbersgameprojectcourse.presentation.factories.GameViewModelFactory
 import dev.passerby.numbersgameprojectcourse.presentation.viewmodels.GameViewModel
 
 class GameFragment : Fragment() {
@@ -23,7 +24,14 @@ class GameFragment : Fragment() {
         get() = _binding ?: throw RuntimeException("FragmentGameBinding == null")
 
     private lateinit var level: Level
-    private lateinit var viewModel: GameViewModel
+
+    private val viewModelFactory by lazy {
+        GameViewModelFactory(level, requireActivity().application)
+    }
+    private val viewModel by lazy {
+        ViewModelProvider(this, viewModelFactory)[GameViewModel::class.java]
+    }
+
     private val tvOptions by lazy {
         mutableListOf<TextView>().apply {
             add(binding.tvOption1)
@@ -45,7 +53,6 @@ class GameFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel = ViewModelProvider(this)[GameViewModel::class.java]
         _binding = FragmentGameBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -53,7 +60,6 @@ class GameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeViewModel()
-        viewModel.startGame(level)
         setClickListenerToOptions()
     }
 
