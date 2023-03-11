@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import dev.passerby.numbersgameprojectcourse.R
 import dev.passerby.numbersgameprojectcourse.databinding.FragmentGameBinding
 import dev.passerby.numbersgameprojectcourse.domain.entity.GameResult
@@ -122,8 +123,10 @@ class GameFragment : Fragment() {
     }
 
     private fun launchGameFinishedFragment(gameResult: GameResult) {
-        parentFragmentManager.beginTransaction().addToBackStack(null)
-            .replace(R.id.main_container, GameFinishedFragment.newInstance(gameResult)).commit()
+        val args = Bundle().apply {
+            putParcelable(GameFinishedFragment.KEY_GAME_RESULT, gameResult)
+        }
+        findNavController().navigate(R.id.action_gameFragment_to_gameFinishedFragment, args)
     }
 
     override fun onDestroyView() {
@@ -133,7 +136,7 @@ class GameFragment : Fragment() {
 
     companion object {
 
-        private const val KEY_LEVEL = "level"
+        const val KEY_LEVEL = "level"
         const val NAME = "GameFragment"
         fun newInstance(level: Level): GameFragment {
             return GameFragment().apply {

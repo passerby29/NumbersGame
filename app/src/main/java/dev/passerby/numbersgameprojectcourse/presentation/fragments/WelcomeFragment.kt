@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import dev.passerby.numbersgameprojectcourse.R
 import dev.passerby.numbersgameprojectcourse.databinding.FragmentWelcomeBinding
 
@@ -29,8 +30,7 @@ class WelcomeFragment : Fragment() {
     }
 
     private fun launchChooseLevelFragment() {
-        parentFragmentManager.beginTransaction().addToBackStack(null)
-            .replace(R.id.main_container, ChooseLevelFragment.newInstance()).commit()
+        findNavController().navigate(R.id.action_welcomeFragment_to_chooseLevelFragment)
     }
 
     override fun onDestroyView() {
