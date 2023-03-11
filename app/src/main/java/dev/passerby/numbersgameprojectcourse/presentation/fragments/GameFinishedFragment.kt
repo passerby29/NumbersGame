@@ -40,17 +40,22 @@ class GameFinishedFragment : Fragment() {
                     retryGame()
                 }
             })
+        binding.buttonRetry.setOnClickListener { retryGame() }
     }
 
     private fun parseArgs() {
-        gameResult = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            requireArguments().getSerializable(
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requireArguments().getParcelable(
                 KEY_GAME_RESULT,
                 GameResult::class.java
-            ) as GameResult
+            )?.let {
+                gameResult = it
+            }
         } else {
             @Suppress("DEPRECATION")
-            requireArguments().getSerializable(KEY_GAME_RESULT) as GameResult
+            requireArguments().getParcelable<GameResult>(KEY_GAME_RESULT)?.let {
+                gameResult = it
+            }
         }
     }
 
@@ -69,7 +74,7 @@ class GameFinishedFragment : Fragment() {
         fun newInstance(gameResult: GameResult): GameFinishedFragment {
             return GameFinishedFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable(KEY_GAME_RESULT, gameResult)
+                    putParcelable(KEY_GAME_RESULT, gameResult)
                 }
             }
         }
